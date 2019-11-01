@@ -2,8 +2,7 @@
 
 const Hoek = require('@hapi/hoek');
 const Lab = require('@hapi/lab');
-const Moment = require('moment');
-const Joi = require('../lib/joi');
+const Joi = require('@hapi/joi');
 const { permutations, expectValidation } = require('./test_helpers');
 const ValueGenerator = require('../lib/exampleGenerator');
 
@@ -969,43 +968,6 @@ describe('Date', () => {
         const example = ValueGenerator(schema);
 
         expect(example).to.be.a.number();
-        ExpectValidation(example, schema);
-    });
-
-    it('should return a moment formatted date', () => {
-
-        const fmt = 'HH:mm';
-        const schema = Joi.date().format(fmt);
-        const example = ValueGenerator(schema);
-        const moment = new Moment(example, fmt, true);
-
-        expect(example).to.be.a.string();
-        expect(moment.isValid()).to.equal(true);
-        ExpectValidation(example, schema);
-    });
-
-    it('should return a moment formatted date with Joi version <= 10.2.1', () => {
-
-        const fmt = 'HH:mm';
-        const schema = Joi.date().format(fmt);
-        schema._flags.momentFormat = fmt;
-        const example = ValueGenerator(schema);
-        const moment = new Moment(example, fmt, true);
-
-        expect(example).to.be.a.string();
-        expect(moment.isValid()).to.equal(true);
-        ExpectValidation(example, schema);
-    });
-
-    it('should return one of the allowed moment formatted dates', () => {
-
-        const fmt = ['HH:mm', 'YYYY/MM/DD'];
-        const schema = Joi.date().format(fmt);
-        const example = ValueGenerator(schema);
-        const moment = new Moment(example, fmt, true);
-
-        expect(example).to.be.a.string();
-        expect(moment.isValid()).to.equal(true);
         ExpectValidation(example, schema);
     });
 });

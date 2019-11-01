@@ -1,10 +1,9 @@
 'use strict';
 
 const Felicity = require('../lib');
-const Joi = require('../lib/joi');
+const Joi = require('@hapi/joi');
 const Lab = require('@hapi/lab');
 const Uuid = require('uuid');
-const Moment = require('moment');
 
 const { describe, expect, it } = exports.lab = Lab.script();
 const ExpectValidation = require('./test_helpers').expectValidation.bind({}, expect);
@@ -96,18 +95,6 @@ describe('Felicity Example', () => {
         const example = Felicity.example(schema);
 
         expect(example).to.be.a.date();
-        ExpectValidation(example, schema);
-    });
-
-    it('should return a moment formatted date', () => {
-
-        const fmt = 'HH:mm';
-        const schema = Joi.date().format(fmt);
-        const example = Felicity.example(schema);
-        const moment = new Moment(example, fmt, true);
-
-        expect(example).to.be.a.string();
-        expect(moment.isValid()).to.equal(true);
         ExpectValidation(example, schema);
     });
 
