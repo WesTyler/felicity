@@ -38,9 +38,9 @@ const expectValidation = (expect) => {
 
     return (value, schema) => {
 
-        const validationResult = Joi.validate(value, schema);
+        const validationResult = schema.validate(value);
 
-        expect(validationResult.error).to.equal(null);
+        expect(validationResult.error).to.equal(undefined);
     };
 };
 

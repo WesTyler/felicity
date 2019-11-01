@@ -37,7 +37,7 @@ describe('Any', () => {
         expect(examples.allowed2).to.exist();
 
         examples = {};
-        schema = Joi.any().allow(['first', 'second', true, 10]);
+        schema = Joi.any().allow('first', 'second', true, 10);
 
         for (let i = 0; i < 25; ++i) {
             const example = ValueGenerator(schema);
@@ -71,7 +71,7 @@ describe('Any', () => {
         expect(['allowed1', 'allowed2'].indexOf(example)).to.not.equal(-1);
         ExpectValidation(example, schema);
 
-        schema = Joi.any().valid([true, 10]);
+        schema = Joi.any().valid(true, 10);
         example = ValueGenerator(schema);
 
         expect([true, 10].indexOf(example)).to.not.equal(-1);
@@ -87,10 +87,10 @@ describe('Any', () => {
         ExpectValidation(example, schema);
     });
 
-    it('should return an "example" value from multiple arguments', () => {
+    it('should return an "example" value from multiple calls', () => {
 
         const examples = [123, 321];
-        const schema = Joi.any().example(...examples);
+        const schema = Joi.any().example(examples[0]).example(examples[1]);
         const example = ValueGenerator(schema);
         const foundExample = examples.find((ex) => ex === example);
 
@@ -98,23 +98,12 @@ describe('Any', () => {
         ExpectValidation(example, schema);
     });
 
-    it('should return an "example" value from a single array argument', () => {
+    it('should return an "example" value from multiple calls with override', () => {
 
-        const schema = Joi.any().example([123]);
+        const schema = Joi.any().example('overridden').example('example_value', {override: true});
         const example = ValueGenerator(schema);
 
-        expect(example).to.equal(123);
-        ExpectValidation(example, schema);
-    });
-
-    it('should return an "example" value from multiple single array arguments', () => {
-
-        const examples = [[123], [321]];
-        const schema = Joi.any().example(...examples);
-        const example = ValueGenerator(schema);
-        const [foundExample] = examples.find(([ex]) => ex === example);
-
-        expect(foundExample).to.equal(example);
+        expect(example).to.equal('example_value');
         ExpectValidation(example, schema);
     });
 
@@ -129,10 +118,7 @@ describe('Any', () => {
 
     it('should return a dynamic default value', () => {
 
-        const generateDefault = function () {
-
-            return true;
-        };
+        const generateDefault =  () => true;
 
         generateDefault.description = 'generates default';
         const schema = Joi.any().default(generateDefault);
@@ -199,7 +185,7 @@ describe('String', () => {
 
     it('should return default value when valids are ignored', () => {
 
-        const schema = Joi.string().valid(['value1', 'value2', 'fallback']).default('fallback');
+        const schema = Joi.string().valid('value1', 'value2', 'fallback').default('fallback');
         const example = ValueGenerator(schema, { config: { ignoreValids: true } });
 
         expect(example).to.equal('fallback');
@@ -469,9 +455,9 @@ describe('String', () => {
     });
 });
 
-describe('Number', () => {
+describe.only('Number', () => {
 
-    it('should return a number', () => {
+    it.only('should return a number', () => {
 
         const schema = Joi.number();
         const example = ValueGenerator(schema);

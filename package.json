@@ -4,7 +4,7 @@
   "description": "Javascript object instantiation from Joi schema",
   "main": "lib/index.js",
   "scripts": {
-    "test": "lab -t 100 -a @hapi/code -L",
+    "test": "lab -a @hapi/code",
     "test-cover": "lab -a @hapi/code -L -r html > test/test.html && open test/test.html",
     "doctoc": "doctoc API.md"
   },
@@ -25,12 +25,12 @@
   "homepage": "https://github.com/xogroup/felicity#readme",
   "dependencies": {
     "@hapi/hoek": "8.x",
-    "@hapi/joi": "15.x",
+    "@hapi/joi": "16.x",
     "randexp": "0.5.x",
     "uuid": "3.x"
   },
   "peerDependencies": {
-    "@hapi/joi": "15.x"
+    "@hapi/joi": "16.x"
   },
   "devDependencies": {
     "@hapi/code": "7.x",
